@@ -3,7 +3,7 @@ import { PrismaClient, Products } from '@prisma/client';
 
 @Injectable()
 export class ProductService {
-  constructor(private readonly prisma: PrismaClient) {}
+  constructor(private readonly prisma: PrismaClient) { }
 
   findAll() {
     return this.prisma.products.findMany();
@@ -20,7 +20,6 @@ export class ProductService {
   async create(product: ProductDto): Promise<Products> {
     const { categoryId, menuId } = product;
 
-    // Verificar se o categoryId é válido
     const categoryExists = await this.prisma.categories.findUnique({
       where: {
         id: categoryId,
@@ -30,7 +29,6 @@ export class ProductService {
       throw new NotFoundException(`Categoria com ID ${categoryId} não encontrada.`);
     }
 
-    // Verificar se o menuId é válido
     const menuExists = await this.prisma.menus.findUnique({
       where: {
         id: menuId,
@@ -48,7 +46,6 @@ export class ProductService {
   async update(id: string, product: ProductDto): Promise<Products> {
     const { categoryId, menuId } = product;
 
-    // Verificar se o categoryId é válido
     const categoryExists = await this.prisma.categories.findUnique({
       where: {
         id: categoryId,
@@ -58,7 +55,6 @@ export class ProductService {
       throw new NotFoundException(`Categoria com ID ${categoryId} não encontrada.`);
     }
 
-    // Verificar se o menuId é válido
     const menuExists = await this.prisma.menus.findUnique({
       where: {
         id: menuId,

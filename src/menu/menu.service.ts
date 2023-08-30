@@ -3,7 +3,7 @@ import { PrismaClient, Prisma } from '@prisma/client';
 
 @Injectable()
 export class MenuService {
-  constructor(private readonly prisma: PrismaClient) {}
+  constructor(private readonly prisma: PrismaClient) { }
 
   findAll() {
     return this.prisma.menus.findMany();

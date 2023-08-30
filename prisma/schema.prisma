@@ -11,32 +11,32 @@ datasource db {
 }
 
 model Menus {
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   shift     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   products  Products[]
 }
 
 model Products {
-  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   price       Float
   image       String
   description String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  categoryId  String   @db.ObjectId
-  menuId      String   @db.ObjectId
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  categoryId  String     @db.ObjectId
+  menuId      String     @db.ObjectId
   category    Categories @relation(fields: [categoryId], references: [id])
-  menu        Menus     @relation(fields: [menuId], references: [id])
+  menu        Menus      @relation(fields: [menuId], references: [id])
 }
 
 model Categories {
-  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
   name        String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
   products    Products[]
 }

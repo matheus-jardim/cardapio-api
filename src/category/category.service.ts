@@ -3,7 +3,7 @@ import { PrismaClient, Categories } from '@prisma/client';
 
 @Injectable()
 export class CategoryService {
-  constructor(private readonly prisma: PrismaClient) {}
+  constructor(private readonly prisma: PrismaClient) { }
 
   findAll() {
     return this.prisma.categories.findMany();

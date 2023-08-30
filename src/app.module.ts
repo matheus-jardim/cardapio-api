@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { MenuModule } from './menu/menu.module';
 import { CategoryModule } from './category/category.module';
 import { ProductModule } from './product/product.module';
-import { prisma, initializeDatabase } from './prisma/prisma.service';
+import { initializeDatabase } from './prisma/prisma.service';
 
 @Module({
   imports: [MenuModule, CategoryModule, ProductModule],

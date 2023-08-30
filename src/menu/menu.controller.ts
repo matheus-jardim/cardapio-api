@@ -3,13 +3,13 @@ import { MenuService } from './menu.service';
 
 @Controller('menus')
 export class MenuController {
-  constructor(private readonly menuService: MenuService) {}
+  constructor(private readonly menuService: MenuService) { }
 
   @Get()
   findAll() {
     return this.menuService.findAll();
   }
-  
+
   @Get('current')
   getCurrentMenu() {
     return this.menuService.getCurrentMenu();
