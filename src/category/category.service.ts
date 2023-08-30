@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Categories } from '@prisma/client';
 
 @Injectable()
 export class CategoryService {
@@ -17,14 +17,14 @@ export class CategoryService {
     });
   }
 
-  create(category: CategoryDto): void {
-    this.prisma.categories.create({
+  create(category: CategoryDto): Promise<Categories> {
+    return this.prisma.categories.create({
       data: category,
     });
   }
 
-  update(id: string, category: CategoryDto): void {
-    this.prisma.categories.update({
+  update(id: string, category: CategoryDto): Promise<Categories> {
+    return this.prisma.categories.update({
       where: {
         id,
       },
@@ -32,11 +32,22 @@ export class CategoryService {
     });
   }
 
-  delete(id: string): void {
-    this.prisma.categories.delete({
+  delete(id: string): Promise<Categories> {
+    return this.prisma.categories.delete({
       where: {
         id,
       },
+    });
+  }
+
+  async findOneWithProducts(id: string): Promise<Categories | null> {
+    return this.prisma.categories.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        products: true
+      }
     });
   }
 }

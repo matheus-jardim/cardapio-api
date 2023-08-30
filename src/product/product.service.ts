@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaClient, Products } from '@prisma/client';
 
 @Injectable()
 export class ProductService {
@@ -17,14 +17,58 @@ export class ProductService {
     });
   }
 
-  create(product: ProductDto): void {
-    this.prisma.products.create({
+  async create(product: ProductDto): Promise<Products> {
+    const { categoryId, menuId } = product;
+
+    // Verificar se o categoryId é válido
+    const categoryExists = await this.prisma.categories.findUnique({
+      where: {
+        id: categoryId,
+      },
+    });
+    if (!categoryExists) {
+      throw new NotFoundException(`Categoria com ID ${categoryId} não encontrada.`);
+    }
+
+    // Verificar se o menuId é válido
+    const menuExists = await this.prisma.menus.findUnique({
+      where: {
+        id: menuId,
+      },
+    });
+    if (!menuExists) {
+      throw new NotFoundException(`Menu com ID ${menuId} não encontrado.`);
+    }
+
+    return this.prisma.products.create({
       data: product,
     });
   }
 
-  update(id: string, product: ProductDto): void {
-    this.prisma.products.update({
+  async update(id: string, product: ProductDto): Promise<Products> {
+    const { categoryId, menuId } = product;
+
+    // Verificar se o categoryId é válido
+    const categoryExists = await this.prisma.categories.findUnique({
+      where: {
+        id: categoryId,
+      },
+    });
+    if (!categoryExists) {
+      throw new NotFoundException(`Categoria com ID ${categoryId} não encontrada.`);
+    }
+
+    // Verificar se o menuId é válido
+    const menuExists = await this.prisma.menus.findUnique({
+      where: {
+        id: menuId,
+      },
+    });
+    if (!menuExists) {
+      throw new NotFoundException(`Menu com ID ${menuId} não encontrado.`);
+    }
+
+    return this.prisma.products.update({
       where: {
         id,
       },
@@ -32,8 +76,8 @@ export class ProductService {
     });
   }
 
-  delete(id: string): void {
-    this.prisma.products.delete({
+  delete(id: string): Promise<Products> {
+    return this.prisma.products.delete({
       where: {
         id,
       },

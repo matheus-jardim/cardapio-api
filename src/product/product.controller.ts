@@ -16,17 +16,33 @@ export class ProductController {
   }
 
   @Post()
-  createProduct(@Body() product: ProductDto) {
-    return this.productService.create(product);
+  async createProduct(@Body() product: ProductDto) {
+    try {
+      const createdProduct = await this.productService.create(product);
+      return { success: true, product: createdProduct };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
   }
+  
 
   @Put(':id')
-  updateProduct(@Param('id') id: string, @Body() product: ProductDto) {
-    return this.productService.update(id, product);
+  async updateProduct(@Param('id') id: string, @Body() product: ProductDto) {
+    try {
+      const updatedProduct = await this.productService.update(id, product);
+      return { success: true, product: updatedProduct };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
   }
 
   @Delete(':id')
-  deleteProduct(@Param('id') id: string) {
-    return this.productService.delete(id);
+  async deleteProduct(@Param('id') id: string) {
+    try {
+      const deletedProduct = await this.productService.delete(id);
+      return { success: true, product: deletedProduct };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
   }
 }

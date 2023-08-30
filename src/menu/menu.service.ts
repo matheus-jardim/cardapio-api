@@ -19,6 +19,7 @@ export class MenuService {
       return this.prisma.menus.findFirst({ where: { shift: { equals: 'day' } } as Prisma.MenusWhereInput });
     }
   }
+
 }
 
 export const prismaClientProvider = {
